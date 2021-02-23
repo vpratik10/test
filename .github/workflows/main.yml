@@ -11,4 +11,4 @@ jobs:
         USERNAME: ubuntu
         HOST: 54.167.170.48
         SCRIPT: ~/deploy.sh
-        KEY_PATH: ${{ secrets.UAT_KEY }}
+        KEY: ${{ secrets.UAT_KEY }}
