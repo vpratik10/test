@@ -1,22 +1,14 @@
-name: Deploy EC2
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [closed]
+name: CI
+on: [push]
+ 
 jobs:
-  merge-PR:
-    if: github.event.pull_request.merged == true
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install SSH key
-        uses: actions/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      - name: rsync over ssh
-        run: ./deploy_to_aws.sh
+    - name: Deploy to nerdhood.de
+      uses: appleboy/ssh-action@master
+      env:
+        USERNAME: ubuntu
+        HOST: 54.167.170.48
+        SCRIPT: ~/deploy.sh
+        KEY: ${{ secrets.UAT_KEY }}
