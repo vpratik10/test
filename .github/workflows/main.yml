@@ -1,0 +1,19 @@
+name: Deploy EC2
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+jobs:
+  merge-PR:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 34.207.64.117
+          username: ubuntu
+          key: ${{ secrets.UAT_KEY }}
+          script: sh app.sh
