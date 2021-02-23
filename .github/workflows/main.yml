@@ -2,17 +2,21 @@ name: Deploy EC2
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [closed]
 jobs:
-  build:
+  merge-PR:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using ssh key
+      - name: Checkout
         uses: actions/checkout@v2
+      - name: Install SSH key
+        uses: actions/ssh-key-action@v2
         with:
-          host: 34.207.64.117
-          username: ubuntu
-          key: ${{ secrets.UAT_KEY }}
-          script: sh app.sh
+          key: ${{ secrets.SSH_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: rsync over ssh
+        run: ./deploy_to_aws.sh
