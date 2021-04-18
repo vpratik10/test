@@ -1,21 +1,14 @@
-name: 'Nightly Merge'
+name: Merge any release branch to uat
 on: [push, pull_request]
-#
 jobs:
-  nightly-merge:
-
+  merge-branch:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+      - uses: actions/checkout@master
 
-    - name: Nightly Merge
-      uses: robotology/gh-action-nightly-merge@v1.3.1
-      with:
-        stable_branch: 'master'
-        development_branch: 'staging'
-        allow_ff: false
-        no-commit : true
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Merge Master -> Staging
+        uses: devmasx/merge-branch@v1.3.1
+        with:
+          type: now
+          target_branch: staging
+          github_token: ${{ github.TOKEN }}
