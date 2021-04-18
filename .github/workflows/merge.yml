@@ -16,5 +16,6 @@ jobs:
         stable_branch: 'master'
         development_branch: 'staging'
         allow_ff: false
+        no-commit : true
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
