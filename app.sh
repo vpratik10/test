@@ -17,3 +17,6 @@ sudo npm run build
 echo "Run new PM2 action"
 sudo cp /home/ubuntu/eccosystem.json ecosystem.json
 sudo pm2 start ecosystem.json
+
+
+##
