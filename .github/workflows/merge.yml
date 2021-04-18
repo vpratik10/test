@@ -1,9 +1,6 @@
 name: 'Nightly Merge'
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 #
 jobs:
   nightly-merge:
